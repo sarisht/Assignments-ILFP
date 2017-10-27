@@ -123,17 +123,29 @@ cnf (Implies((And((Implies((P "1"),(P "2"))),(P "1"))),(P "2")));;*)
 If l is not T then after making p true given the same set of propositional requirements we try to make l true
 This can be extended to a set of proposition entails p by changing l to a list of propositions, popping their head and releasing answer when it is empty*)
 let rec make_help p b s l = match p with
-T-> if b then if l = T then s else make_help (cnf_prop l) true s T else []
-|F-> if b then [] else if l = T then s else make_help (cnf_prop l) true s T
-|P(x) -> if member (p,not b) s then [] else if member (p,b) s then s else if l = T then (p,b)::s else make_help (cnf_prop l) true ((p,b)::s) T
-|Not(p1) -> make_help p1 (not b) s l 
-|Or(p1,p2) -> let k1 = make_help p1 b s l in 
+	T-> if b then 
+			if l = T then s 
+			else make_help (cnf_prop l) true s T 
+		else []
+	|F-> if b then [] 
+		else if l = T then s 
+			else make_help (cnf_prop l) true s T
+	|P(x) -> if member (p,not b) s then [] 
+			else 
+				if l = T then
+					if member (p,b) s then s 
+					else (p,b)::s 
+				else 
+					if member (p,b) s then make_help (cnf_prop l) true s T
+					else make_help (cnf_prop l) true ((p,b)::s) T
+	|Not(p1) -> make_help p1 (not b) s l 
+	|Or(p1,p2) -> let k1 = make_help p1 b s l in 
 				if b then if (k1 = []) then make_help p2 b s l else k1
 				else if (k1 =[]) then [] else make_help p2 b (union s k1) l
-|And(p1,p2)-> let k1 = make_help p1 b s l in 
+	|And(p1,p2)-> let k1 = make_help p1 b s l in 
 				if not b then if (k1 = []) then make_help p2 b s l else k1
 				else if (k1 =[]) then [] else make_help p2 b (union s k1) l
-|Implies(p1,p2)-> [];;
+	|Implies(p1,p2)-> [];;
 
 let make p b l= if b then make_help (cnf_prop p) b [] l else make_help (dnf_prop p) b [] l;;
 
