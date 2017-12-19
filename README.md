@@ -1,6 +1,6 @@
 # Assignments-ILFP
-To run Assignments 1-5 run ocaml < <filename> in cmd
-To run Assignment 6 run ocaml -init "2014TT10934_Assignment6.ml"
+To run Assignments 1-5 run ocaml < \<filename> in cmd
+To run Assignment 6 run ocaml -init "Assignment6.ml"
 ### ASSIGNMENT 1
 Basic Set Representation via list and function in Ocaml
 ### ASSIGNMENT 2
