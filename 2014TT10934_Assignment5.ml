@@ -77,12 +77,29 @@ let resolve_queue goal p= resolve_queue_h goal p p [];;
 
 resolve_queue [P("1");P("2")] [Fact(P("1"));Fact(P("3"));Fact(P("4"));Rule(P("2"), [P("3");P("4")])];;
 resolve_queue [P("1");P("2")] [Rule(P("1"), [P("3")]);Rule(P("3"), [P("1")]);Fact(P("1"));Fact(P("2"))];;
-resolve_stack [P("1");P("2")] [Rule(P("1"), [P("3")]);Rule(P("3"), [P("1")]);Fact(P("1"));Fact(P("2"))];;
 
+let program1 = [Fact(P("a"));Fact(P("b"))];;
+let goal1 = [P("a")];;
 
+let program2 = [Fact(P("x"));Fact(P("y"));Rule(P("z"), [P("x");P("y")])];;
+let goal2 = [P("z");P("x")];;
 
+let program3 = [Fact(P("m"));Fact(P("n"));Rule(P("p"), [P("m")]);Rule(P("q"), [P("p");P("n")])];;
+let goal3 = [P("q");P("p")];;
 
+let program4 = [Rule(P("k"), [P("i")]);Rule(P("i"), [P("k")])];;
+let goal4 = [P("i")];;
 
+let test1 = resolve_stack goal1 program1;;
+let test2 = resolve_queue goal1 program1;;
 
+let test3 = resolve_stack goal2 program2;;
+let test4 = resolve_queue goal2 program2;;
+
+let test5 = resolve_stack goal3 program3;;
+let test6 = resolve_queue goal3 program3;;
+
+(*let test7 = resolve_stack goal4 program4;;*)
+let test8 = resolve_queue goal4 program4;;
 
 

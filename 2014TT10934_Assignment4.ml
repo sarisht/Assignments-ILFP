@@ -139,10 +139,20 @@ let rec mgu_comp term_list1 term_list2 = match term_list1,term_list2 with ([],[]
 let mgu t1 t2 = mgu_comp [t1] [t2];;
 
 (*Testing*)
-let term1 = Node("2",[]);;
+let term1 = Node("2",[V("P")]);;
 let term2 = Node("*",[V("X"); Node("+",[term1;term1])]);;
 let term3 = V("Y");;
 let term4 = (Node("g",[V "X";Node("*",[term2;V "X"])]));;
 let term5 = (Node("g",[V "Z";Node("*",[V "X";V "Z"])]));;
 let term6 = (Node("g",[V "Z";Node("g",[V "X";V "Z"])]));;
 mgu term4 term5;;
+let sub1 = [["P",V("R")]];;
+let sub2 = [["Y",Node("g",[V("Z");V("X")])]];;
+let sub3 = [["X",V("Y")];["Y",Node("2",[])]];;
+let sub4 = [["Y",V("Z")];["X",Node("*",[V("Y");V("Y")];;
+let sub5 = [["Z",Node("g",[V("X");Node("*",[V("Y");Node("*",[V("X");V("Y")])])])];["Y",V("N")];["X",V("M")]];;
+let sub6 = [["Y",V("N")];["X",V("M")];["Z",Node("g",[V("X");Node("*",[V("Y");Node("*",[V("X");V("Y")])])])]];;
+let sub7 = [["X",V("I")]];;
+let sub8 = [["Y",V("J")]];;
+
+subst term1 sub1;;
